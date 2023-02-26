@@ -28,13 +28,29 @@ def draw_line_plot():
 def draw_bar_plot():
     # Copy and modify data for monthly bar plot
     df_bar = df.copy()
-
-
+    df_bar['Years'] = df_bar.index.year
+    df_bar['Months'] = df_bar.index.month_name()
+    
+    month = ["January", "February", "March", "April", "May", "June", "July", "August",
+              "September", "October", "November", "December"]
+    
+    df_bar['Months'] = pd.Categorical(df_bar['Months'], categories=month)
+    df_bar = df_bar.reset_index()
+    print(df_bar)
+    
+    df_bar_fig = pd.pivot_table(
+        df_bar,
+        values="value",
+        index="Years",
+        columns="Months"
+    )
     # Draw bar plot
-
-
-
-
+    fig = df_bar_fig.plot(kind='bar').get_figure()
+    fig.set_figheight(10)
+    fig.set_figwidth(9)
+    plt.xlabel('Years')
+    plt.ylabel('Average Page Views')
+    plt.legend(title='Months')
 
     # Save image and return fig (don't change this part)
     fig.savefig('bar_plot.png')
