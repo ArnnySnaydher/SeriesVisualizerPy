@@ -51,7 +51,7 @@ def draw_bar_plot():
     plt.xlabel('Years')
     plt.ylabel('Average Page Views')
     plt.legend(title='Months')
-
+    plt.show()
     # Save image and return fig (don't change this part)
     fig.savefig('bar_plot.png')
     return fig
@@ -63,9 +63,11 @@ def draw_box_plot():
     df_box['year'] = [d.year for d in df_box.date]
     df_box['month'] = [d.strftime('%b') for d in df_box.date]
 
+    month = ["January", "February", "March", "April", "May", "June", "July", "August",
+              "September", "October", "November", "December"]
+    
+    df_box['Months'] = pd.Categorical(df_box['Months'], categories=month)
     # Draw box plots (using Seaborn)
-
-
 
 
 
