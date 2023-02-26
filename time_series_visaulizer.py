@@ -60,15 +60,28 @@ def draw_box_plot():
     # Prepare data for box plots (this part is done!)
     df_box = df.copy()
     df_box.reset_index(inplace=True)
-    df_box['year'] = [d.year for d in df_box.date]
-    df_box['month'] = [d.strftime('%b') for d in df_box.date]
+    df_box['Years'] = [d.year for d in df_box.date]
+    df_box['Months'] = [d.strftime('%b') for d in df_box.date]
 
-    month = ["January", "February", "March", "April", "May", "June", "July", "August",
-              "September", "October", "November", "December"]
+    month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+              "Sep", "Oct", "Nov", "Dec"]
     
     df_box['Months'] = pd.Categorical(df_box['Months'], categories=month)
     # Draw box plots (using Seaborn)
+    
+    fig = plt.subplots(1,2,figsize=(24,10))
+    plt.subplot(1,2,1)
+    sns.boxplot(x=df_box["Years"], y=df_box['value']).get_figure()
+    plt.title('Year-wise Box Plot (Trend)')
+    plt.xlabel('Year')
+    plt.ylabel('Page Views')
 
+    plt.subplot(1,2,2)
+    sns.boxplot(x=df_box['Months'], y=df_box['value']).get_figure()
+    plt.title('Month-wise Box Plot (Seasonality)')
+    plt.xlabel('Month')
+    plt.ylabel('Page Views')
+    #plt.show()
 
 
     # Save image and return fig (don't change this part)
